@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+import shutil
+import subprocess
+
+shutil.copy('talk.tex', 'build/talk.tex')
+subprocess.check_call(['pdflatex', 'build/talk.tex'])
