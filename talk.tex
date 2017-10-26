@@ -1,6 +1,7 @@
 \documentclass{beamer}
 
 \usepackage[utf8]{inputenc}
+\usepackage{listings}
 
 \title{Building Python Applications with Docker}
 \author{Moshe Zadka}
@@ -18,6 +19,11 @@ Choose foundation wisely (and stabley)
 \begin{frame}
 \frametitle{Fork tagging}
 Renaming images for posterity
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Fork tagging}
+\lstinputlisting[language=Python,firstline=7]{fork-tag.py}
 \end{frame}
 
 \end{document}

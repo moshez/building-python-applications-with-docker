@@ -3,4 +3,5 @@ import shutil
 import subprocess
 
 shutil.copy('talk.tex', 'build/talk.tex')
-subprocess.check_call(['pdflatex', 'build/talk.tex'])
+shutil.copy('fork-tag.py', 'build/fork-tag.py')
+subprocess.check_call(['pdflatex', 'talk.tex'], cwd='build')
