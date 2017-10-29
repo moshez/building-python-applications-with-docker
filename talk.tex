@@ -18,11 +18,21 @@
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{What's wrong?}
+\frametitle{What's bad?}
 \verb|bad.docker|
 \lstinputlisting{bad.docker}
 \end{frame}
 
+\begin{frame}[fragile]
+\frametitle{What's wrong?}
+\begin{itemize}
+\item latest \pause
+\item Layer explosion \pause
+\item Random system packages \pause
+\item Random Python packages \pause
+\item PYTHONPATH
+\end{itemize}
+\end{frame}
 
 \begin{frame}
 \frametitle{Base images}
