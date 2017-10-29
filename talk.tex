@@ -15,6 +15,8 @@
 \frametitle{Context}
 \verb|catx/app.py|
 \lstinputlisting[language=Python,firstline=3]{catx/app.py}
+\verb|catx/__main__.py|
+\lstinputlisting[language=Python,firstline=5]{catx/__main__.py}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -30,7 +32,9 @@
 \item Layer explosion \pause
 \item Random system packages \pause
 \item Random Python packages \pause
-\item PYTHONPATH
+\item PYTHONPATH \pause
+\item Shipping build environment \pause
+\item Using reference WSGI server
 \end{itemize}
 \end{frame}
 
@@ -52,16 +56,28 @@ Renaming images for posterity
 \begin{frame}[fragile]
 \frametitle{Python Artifacts}
 \framesubtitle{sdist}
+\begin{itemize}
+\item What \verb|python setup.py sdist| creates
+\item Basically just a tarball of sources
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Python Artifacts}
 \framesubtitle{wheel}
+\begin{itemize}
+\item Fully built and ready
+\item Reliable installation
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Python Artifacts}
 \framesubtitle{pex}
+\begin{itemize}
+\item Python executable
+\item Installation is "copy"
+\end{itemize}
 \end{frame}
 
 \end{document}
