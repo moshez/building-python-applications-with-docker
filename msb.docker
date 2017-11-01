@@ -1,0 +1,7 @@
+FROM moshez/pypy3:2017-10-30T09-29-03-882199 as builder
+RUN pypy3 -m venv /appenv
+RUN /appenv/bin/pip install twisted pyramid
+RUN tar cvzf /appenv.tar.gz /appenv
+FROM moshez/pypy3:2017-10-30T09-29-03-882199
+COPY --from=builder /appenv.tar.gz /
+RUN tar xvzf /appenv.tar.gz
