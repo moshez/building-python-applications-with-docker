@@ -1,7 +1,13 @@
-FROM moshez/pypy3:2017-10-30T09-29-03-882199 as builder
+FROM moshez/pypy3:2017-10-30T09-29-03-882199 \
+     as builder
 RUN pypy3 -m venv /appenv
 RUN /appenv/bin/pip install twisted pyramid
+COPY catx/ /mnt/src/catx/
+COPY setup.py /mnt/src/
+RUN /appenv/bin/pip install /mnt/src/
 RUN tar cvzf /appenv.tar.gz /appenv
 FROM moshez/pypy3:2017-10-30T09-29-03-882199
 COPY --from=builder /appenv.tar.gz /
 RUN tar xvzf /appenv.tar.gz
+ENTRYPOINT ["/appenv/bin/python", "-m", "twisted", "web", \
+            "--wsgi=catx.app.app"]
