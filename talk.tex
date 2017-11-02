@@ -12,6 +12,29 @@
 \frame{\titlepage}
 
 \begin{frame}[fragile]
+\frametitle{What are containers?}
+Share-less processes
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{What is Docker?}
+\begin{itemize}
+\item client \pause
+\item server (containerd) \pause
+\item runner (runc) \pause
+\item hub
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{What is a Container image?}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{What is a Dockerfile?}
+\end{frame}
+
+\begin{frame}[fragile]
 \frametitle{Context}
 \verb|catx/app.py|
 \lstinputlisting[language=Python,firstline=3]{catx/app.py}
@@ -91,8 +114,25 @@ Renaming images for posterity
 \end{frame}
 
 \begin{frame}[fragile]
+\frametitle{Multistage Build}
+\begin{lstlisting}
+FROM source as name1
+...
+FROM other-source
+...
+COPY --from=name1 ...
+...
+ENTRYPOINT [...]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
 \frametitle{Better Version 1}
-\lstinputlisting{msb.docker}
+\lstinputlisting[lastline=2]{msb.docker}\pause
+\lstinputlisting[firstline=3,lastline=4]{msb.docker}\pause
+\lstinputlisting[firstline=5,lastline=7]{msb.docker}\pause
+\lstinputlisting[firstline=8,lastline=8]{msb.docker}\pause
+\lstinputlisting[firstline=9]{msb.docker}
 \end{frame}
 
 \end{document}
