@@ -28,14 +28,26 @@ Share-less processes
 
 \begin{frame}[fragile]
 \frametitle{What is a Container image?}
+\begin{itemize}
+\item Tarball... \pause
+\item that looks like a linux root \pause
+\item Will also specify some metadata (e.g., entrypoint)
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{What is a Dockerfile?}
+Builds a Docker image
+\begin{lstlisting}
+FROM ....
+COPY from-context
+RUN some command
+...
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Context}
+\frametitle{Python application}
 \verb|catx/app.py|
 \lstinputlisting[language=Python,firstline=3]{catx/app.py}
 \verb|catx/__main__.py|
@@ -114,6 +126,15 @@ Renaming images for posterity
 \end{frame}
 
 \begin{frame}[fragile]
+\frametitle{What is Multistage Build?}
+\begin{itemize}
+\item Build images sequentially \pause
+\item Throw away all except last \pause
+\item Copy previous image
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
 \frametitle{Multistage Build}
 \begin{lstlisting}
 FROM source as name1
@@ -133,6 +154,51 @@ ENTRYPOINT [...]
 \lstinputlisting[firstline=5,lastline=7]{msb.docker}\pause
 \lstinputlisting[firstline=8,lastline=8]{msb.docker}\pause
 \lstinputlisting[firstline=9]{msb.docker}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Locking}
+\begin{lstlisting}
+$ git checkout -b updating-third-party
+$ docker build -t temp-image -f harden.docker .
+$ docker run --rm -it temp-image > requirements.strict.txt
+$ git commit -a -m 'Update 3rd party'
+$ git push
+$ # Follow code workflow
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Locking}
+\begin{lstlisting}
+FROM moshez/pypy3:2017-10-30T09-29-03-882199
+COPY harden-requirements requirements.loose.txt /
+ENTRYPOINT ["/harden-requirements"]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Locking}
+\begin{lstlisting}
+import subprocess, sys
+subprocess.check_output([sys.executable, "-m", "venv",
+                         "/envs/loose"])
+subprocess.check_output(["/envs/loose/bin/pip", "install", "-r",
+                         "/requirements.loose.txt"])
+frozen = subprocess.check_output(["/envs/loose/bin/pip",
+                                  "freeze", "--all"])
+with open("/requirements.frozen.txt", 'wb') as fp:
+    fp.write(frozen)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{Summary}
+\begin{itemize}
+\item Use multi-stage builds \pause
+\item Lock Python requirements \pause
+\item Think about your entrypoint
+\end{itemize}
 \end{frame}
 
 \end{document}
