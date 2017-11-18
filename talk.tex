@@ -190,13 +190,12 @@ ENTRYPOINT ["/lock-requirements"]
 \begin{frame}[fragile]
 \frametitle{Locking}
 \begin{lstlisting}
-import subprocess, sys
-subprocess.check_output([sys.executable, "-m", "venv",
-                         "/envs/loose"])
-subprocess.check_output(["/envs/loose/bin/pip", "install", "-r",
-                         "/requirements.loose.txt"])
-frozen = subprocess.check_output(["/envs/loose/bin/pip",
-                                  "freeze", "--all"])
+cmd(sys.executable, "-m", "venv", "/envs/loose")
+cmd("/envs/loose/bin/pip", "install", "-r",
+    "/requirements.loose.txt"])
+frozen = subprocess.check_output(
+            ["/envs/loose/bin/pip",
+             "freeze", "--all"])
 with open("/requirements.locked.txt", 'wb') as fp:
     fp.write(frozen)
 \end{lstlisting}
