@@ -169,8 +169,9 @@ ENTRYPOINT [...]
 \frametitle{Locking}
 \begin{lstlisting}
 $ git checkout -b updating-third-party
-$ docker build -t temp-image -f harden.docker .
-$ docker run --rm -it temp-image > requirements.strict.txt
+$ docker build -t temp-image -f lock.docker .
+$ docker run --rm -it temp-image > \
+  requirements.locked.txt
 $ git commit -a -m 'Update 3rd party'
 $ git push
 $ # Follow code workflow
@@ -181,8 +182,8 @@ $ # Follow code workflow
 \frametitle{Locking}
 \begin{lstlisting}
 FROM moshez/pypy3:2017-10-30T09-29-03-882199
-COPY harden-requirements requirements.loose.txt /
-ENTRYPOINT ["/harden-requirements"]
+COPY lock-requirements requirements.loose.txt /
+ENTRYPOINT ["/lock-requirements"]
 \end{lstlisting}
 \end{frame}
 
@@ -196,7 +197,7 @@ subprocess.check_output(["/envs/loose/bin/pip", "install", "-r",
                          "/requirements.loose.txt"])
 frozen = subprocess.check_output(["/envs/loose/bin/pip",
                                   "freeze", "--all"])
-with open("/requirements.frozen.txt", 'wb') as fp:
+with open("/requirements.locked.txt", 'wb') as fp:
     fp.write(frozen)
 \end{lstlisting}
 \end{frame}
